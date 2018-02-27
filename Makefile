@@ -1,10 +1,6 @@
-.PHONY: all run-ci clean lint deps generate
+.PHONY: all clean lint generate
 
 all: clean lint generate
-
-deps:
-		@echo "Install dependencies..."
-		dep ensure
 
 clean:
 		@echo "Cleanup..."
