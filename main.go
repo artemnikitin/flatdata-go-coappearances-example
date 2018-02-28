@@ -21,14 +21,16 @@ func main() {
 	}
 	defer g.Close()
 
-	fmt.Println(prettyPrint(g.ToString()))
+	prettyPrint(g.ToString())
+
+	prettyPrint(g.ChaptersVector.Get(0).ToString())
 }
 
-func prettyPrint(s string) string {
+func prettyPrint(s string) {
 	out := bytes.Buffer{}
 	err := json.Indent(&out, []byte(s), "", "\t")
 	if err != nil {
-		return ""
+		fmt.Println(err)
 	}
-	return out.String()
+	fmt.Println(out.String())
 }
