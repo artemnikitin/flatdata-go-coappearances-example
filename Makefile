@@ -1,6 +1,6 @@
 .PHONY: all clean lint generate
 
-all: clean lint generate
+all: clean generate
 
 clean:
 		@echo "Cleanup..."

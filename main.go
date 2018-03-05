@@ -1,8 +1,6 @@
 package main
 
 import (
-	"bytes"
-	"encoding/json"
 	"fmt"
 	"log"
 
@@ -21,16 +19,20 @@ func main() {
 	}
 	defer g.Close()
 
-	prettyPrint(g.ToString())
+	b := g.StringsRawData.GetValue()
+	fmt.Println("Title:", string(get(b, int(g.MetaInstance.Get().GetTitleRef()), byte(0))))
+	fmt.Println("Author:", string(get(b, int(g.MetaInstance.Get().GetAuthorRef()), byte(0))))
+	fmt.Println("Total characters:", g.VerticesVector.GetSize())
 
-	prettyPrint(g.ChaptersVector.Get(0).ToString())
 }
 
-func prettyPrint(s string) {
-	out := bytes.Buffer{}
-	err := json.Indent(&out, []byte(s), "", "\t")
-	if err != nil {
-		fmt.Println(err)
+func get(data []byte, pos int, s byte) []byte {
+	result := make([]byte, 0)
+	for i := pos; i < len(data); i++ {
+		if data[i] == s {
+			break
+		}
+		result = append(result, data[i])
 	}
-	fmt.Println(out.String())
+	return result
 }
