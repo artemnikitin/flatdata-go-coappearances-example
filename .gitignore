@@ -15,3 +15,5 @@
 
 .idea/
 **/*_generated.go
+coappearances_exec
+output.txt
