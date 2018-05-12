@@ -20,8 +20,8 @@ func main() {
 	defer cg.Close()
 
 	showBasicInfo(cg)
-	//showData(cg)
-	//showCoappearances(cg)
+	showData(cg)
+	showCoappearances(cg)
 }
 
 func showBasicInfo(g *coappearances.GraphArchive) {
@@ -62,7 +62,6 @@ func showData(g *coappearances.GraphArchive) {
 				fmt.Println("to:", get(b, int(g.VerticesVector.Get(int(d4.GetToBRef())).GetNameRef())))
 			}
 		}
-		fmt.Println("====================")
 	}
 }
 
@@ -71,7 +70,7 @@ func showCoappearances(g *coappearances.GraphArchive) {
 	// Skip the last edge since it is a sentinel
 	for i := 0; i+1 < g.EdgesVector.GetSize(); i++ {
 		edge := g.EdgesVector.Get(i)
-		fmt.Println(fmt.Sprintf("%s meets %s %d times in chapters:",
+		fmt.Print(fmt.Sprintf("%s meets %s for: \n%d time(s) \nin chapter(s): ",
 			get(b, int(g.VerticesVector.Get(int(edge.GetARef())).GetNameRef())),
 			get(b, int(g.VerticesVector.Get(int(edge.GetBRef())).GetNameRef())),
 			edge.GetCount()))
@@ -79,9 +78,12 @@ func showCoappearances(g *coappearances.GraphArchive) {
 		// This is a typical trick when storing ranges. That's why a sentinel was added to edges.
 		chapterBegin := edge.GetFirstChapterRef()
 		chapterSize := g.EdgesVector.Get(i+1).GetFirstChapterRef() - chapterBegin
-		chapters := g.ChaptersVector.GetSlice(int(chapterBegin), int(chapterSize), 1)
+		chapters := g.ChaptersVector.GetSlice(int(chapterBegin), int(chapterBegin+chapterSize-1), 1)
 		for j := 0; j < len(chapters); j++ {
-			fmt.Print(fmt.Sprintf("%d.%d, ", chapters[j].GetMajor(), chapters[j].GetMinor()))
+			fmt.Print(fmt.Sprintf("%d.%d", chapters[j].GetMajor(), chapters[j].GetMinor()))
+			if j < len(chapters)-1 {
+				fmt.Print(", ")
+			}
 		}
 		fmt.Println()
 	}
