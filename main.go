@@ -63,6 +63,7 @@ func showData(g *coappearances.GraphArchive) {
 			}
 		}
 	}
+	fmt.Println()
 }
 
 func showCoappearances(g *coappearances.GraphArchive) {
@@ -87,6 +88,7 @@ func showCoappearances(g *coappearances.GraphArchive) {
 		}
 		fmt.Println()
 	}
+	fmt.Println()
 }
 
 func get(data []byte, pos int) string {
