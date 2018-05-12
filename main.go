@@ -20,7 +20,7 @@ func main() {
 	defer cg.Close()
 
 	showBasicInfo(cg)
-	//showData(cg)
+	showData(cg)
 	//showCoappearances(cg)
 }
 
@@ -29,6 +29,7 @@ func showBasicInfo(g *coappearances.GraphArchive) {
 	fmt.Println("Title:", get(b, int(g.MetaInstance.Get().GetTitleRef())))
 	fmt.Println("Author:", get(b, int(g.MetaInstance.Get().GetAuthorRef())))
 	fmt.Println("Total characters:", g.VerticesVector.GetSize())
+	fmt.Println()
 }
 
 func showData(g *coappearances.GraphArchive) {
@@ -48,14 +49,12 @@ func showData(g *coappearances.GraphArchive) {
 			}
 			d3, ok := v.(*coappearances.UnaryRelation)
 			if ok {
-				fmt.Println(d3.ToString())
 				fmt.Println("Relation:")
 				fmt.Println("kind:", get(b, int(d3.GetKindRef())))
-				fmt.Println("to:", get(b, int(d3.GetToRef())))
+				fmt.Println("to:", get(b, int(g.VerticesVector.Get(int(d3.GetToRef())).GetNameRef())))
 			}
 			d4, ok := v.(*coappearances.BinaryRelation)
 			if ok {
-				fmt.Println(d4.ToString())
 				fmt.Println("Relation:")
 				fmt.Println("kind:", get(b, int(d4.GetKindRef())))
 				fmt.Println("to:", get(b, int(g.VerticesVector.Get(int(d4.GetToARef())).GetNameRef())))
