@@ -20,7 +20,7 @@ func main() {
 	defer cg.Close()
 
 	showBasicInfo(cg)
-	showData(cg)
+	//showData(cg)
 	//showCoappearances(cg)
 }
 
@@ -29,6 +29,7 @@ func showBasicInfo(g *coappearances.GraphArchive) {
 	fmt.Println("Title:", get(b, int(g.MetaInstance.Get().GetTitleRef())))
 	fmt.Println("Author:", get(b, int(g.MetaInstance.Get().GetAuthorRef())))
 	fmt.Println("Total characters:", g.VerticesVector.GetSize())
+	fmt.Println("Total coappearances:", g.EdgesVector.GetSize())
 	fmt.Println()
 }
 
@@ -67,7 +68,6 @@ func showData(g *coappearances.GraphArchive) {
 
 func showCoappearances(g *coappearances.GraphArchive) {
 	b := g.StringsRawData.GetValue()
-	fmt.Println("Coappearances:", g.EdgesVector.GetSize())
 	// Skip the last edge since it is a sentinel
 	for i := 0; i+1 < g.EdgesVector.GetSize(); i++ {
 		edge := g.EdgesVector.Get(i)
