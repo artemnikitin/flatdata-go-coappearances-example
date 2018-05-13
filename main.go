@@ -15,7 +15,7 @@ func init() {
 func main() {
 	cg, err := coappearances.OpenGraphArchive(flatdata.NewFileResourceStorage("flatdata/Graph.archive"))
 	if err != nil {
-		fmt.Println(err)
+		log.Fatal(err)
 	}
 	defer cg.Close()
 
